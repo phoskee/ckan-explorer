@@ -1,4 +1,4 @@
-import { getCurrentPackageListWithResources } from "@/actions/api";
+import * as api from "@/actions/api";
 import { Button } from "@/components/ui/button";
 
 
@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 export default async function Page() {
 	
-const response = await getCurrentPackageListWithResources();
+const response = await api.getShow({limit: 1, offset: 0});
 	return (
     <div className="container">
       <h1>count: {response.result.length}</h1>

@@ -1,5 +1,6 @@
+import { GroupInfo } from "@/types/ckan-type";
 import axios from "axios";
-const baseUrl = process.env.CKAN_API_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_CKAN_API_BASE_URL;
 
 interface Response {
   help: string;
@@ -12,6 +13,13 @@ interface PackageListParams {
     offset?: number;
 }
 
+/**
+ * Get a list of packages with optional parameters
+ * @param params - Optional parameters for package listing
+ * @param params.limit - Maximum number of packages to return
+ * @param params.offset - Number of packages to skip
+ * @returns Promise with API response
+ */
 export async function getPackageList(params?: PackageListParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}package_list`, {
         params: {
@@ -21,6 +29,13 @@ export async function getPackageList(params?: PackageListParams): Promise<Respon
     return response.data;
 }
 
+/**
+ * Get a list of packages with their resources
+ * @param params - Optional parameters for package listing
+ * @param params.limit - Maximum number of packages to return
+ * @param params.offset - Number of packages to skip
+ * @returns Promise with API response
+ */
 export async function getCurrentPackageListWithResources(params?: PackageListParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}current_package_list_with_resources`, {
         params: {
@@ -36,6 +51,14 @@ interface MemberListParams {
     capacity?: string;
 }
 
+/**
+ * Get a list of members for a group or organization
+ * @param params - Parameters for member listing
+ * @param params.id - ID of the group or organization
+ * @param params.object_type - Type of object to return
+ * @param params.capacity - Role/capacity of the member
+ * @returns Promise with API response
+ */
 export async function getMemberList(params: MemberListParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}member_list`, {
         params: {
@@ -53,6 +76,12 @@ interface CollaboratorListResponse {
     modified: string;
 }
 
+/**
+ * Get a list of collaborators for a package
+ * @param id - ID of the package
+ * @param capacity - Optional role/capacity of the collaborator
+ * @returns Promise with array of collaborator information
+ */
 export async function getPackageCollaboratorList(id: string, capacity?: string): Promise<CollaboratorListResponse[]> {
     const response = await axios.get(`${baseUrl}package_collaborator_list`, {
         params: {
@@ -63,6 +92,12 @@ export async function getPackageCollaboratorList(id: string, capacity?: string):
     return response.data;
 }
 
+/**
+ * Get list of collaborators for a user
+ * @param id - User identifier
+ * @param capacity - Optional role/capacity of the collaborator
+ * @returns Promise with array of collaborator information
+ */
 export async function getPackageCollaboratorListForUser(id: string, capacity?: string): Promise<CollaboratorListResponse[]> {
     const response = await axios.get(`${baseUrl}package_collaborator_list_for_user`, {
         params: {
@@ -89,6 +124,23 @@ interface GroupListParams {
     include_users?: boolean;
 }
 
+/**
+ * Get a list of groups with optional filtering
+ * @param params - Optional parameters for group listing
+ * @param params.type - Type of groups to return
+ * @param params.order_by - Field to sort by
+ * @param params.sort - Sort direction
+ * @param params.limit - Maximum number of groups to return
+ * @param params.offset - Number of groups to skip
+ * @param params.groups - List of group names
+ * @param params.all_fields - Include all fields in response
+ * @param params.include_dataset_count - Include count of datasets
+ * @param params.include_extras - Include extra fields
+ * @param params.include_tags - Include tags
+ * @param params.include_groups - Include sub-groups
+ * @param params.include_users - Include users
+ * @returns Promise with API response
+ */
 export async function getGroupList(params?: GroupListParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}group_list`, {
         params: {
@@ -103,6 +155,17 @@ interface OrganizationListParams extends GroupListParams {
     organizations?: string[];
 }
 
+/**
+ * Get list of organizations with optional filtering
+ * @param params - Optional parameters for organization listing
+ * @param params.organizations - List of organization names
+ * @param params.order_by - Field to sort by
+ * @param params.sort - Sort direction
+ * @param params.limit - Maximum number of organizations to return
+ * @param params.offset - Number of organizations to skip
+ * @param params.all_fields - Include all fields in response
+ * @returns Promise with API response
+ */
 export async function getOrganizationList(params?: OrganizationListParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}organization_list`, {
         params: {
@@ -134,6 +197,14 @@ interface OrganizationListForUserParams {
     include_dataset_count?: boolean;
 }
 
+/**
+ * Get organizations for current user
+ * @param params - Optional parameters
+ * @param params.id - User identifier
+ * @param params.permission - Permission to filter by
+ * @param params.include_dataset_count - Include dataset count in response
+ * @returns Promise with API response
+ */
 export async function getOrganizationListForUser(params?: OrganizationListForUserParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}organization_list_for_user`, {
         params: {
@@ -144,6 +215,10 @@ export async function getOrganizationListForUser(params?: OrganizationListForUse
 }
 
 // License List function
+/**
+ * Get list of available licenses
+ * @returns Promise with API response containing license list
+ */
 export async function getLicenseList(): Promise<Response> {
     const response = await axios.get(`${baseUrl}license_list`);
     return response.data;
@@ -156,6 +231,14 @@ interface TagListParams {
     all_fields?: boolean;
 }
 
+/**
+ * Get list of tags
+ * @param params - Optional parameters for tag listing
+ * @param params.query - Search query string
+ * @param params.vocabulary_id - Filter by vocabulary
+ * @param params.all_fields - Include all fields in response
+ * @returns Promise with API response
+ */
 export async function getTagList(params?: TagListParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}tag_list`, {
         params: {
@@ -174,6 +257,16 @@ interface UserListParams {
     include_site_user?: boolean;
 }
 
+/**
+ * Get user information
+ * @param params - Parameters for user show
+ * @param params.id - User identifier
+ * @param params.include_datasets - Include user's datasets
+ * @param params.include_num_followers - Include number of followers
+ * @param params.include_password_hash - Include password hash
+ * @param params.include_plugin_extras - Include plugin extra data
+ * @returns Promise with API response
+ */
 export async function getUserList(params?: UserListParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}user_list`, {
         params: {
@@ -190,6 +283,14 @@ interface PackageRelationshipsParams {
     rel?: string;
 }
 
+/**
+ * Get list of package relationships
+ * @param params - Parameters for relationship listing
+ * @param params.id - Package identifier
+ * @param params.id2 - Related package identifier
+ * @param params.rel - Type of relationship
+ * @returns Promise with API response
+ */
 export async function getPackageRelationshipsList(params: PackageRelationshipsParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}package_relationships_list`, {
         params: {
@@ -255,12 +356,25 @@ export async function getGroupShow(params: GroupShowParams): Promise<Response> {
             ...params
         }
     });
-    return response.data;
+    return response.data
 }
 
 // Organization Show functions
 interface OrganizationShowParams extends GroupShowParams {}
 
+/**
+ * Get organization information with optional includes
+ * @param params - Parameters for organization show
+ * @param params.id - Organization identifier
+ * @param params.include_datasets - Include datasets in response
+ * @param params.include_dataset_count - Include dataset count
+ * @param params.include_extras - Include extra fields
+ * @param params.include_users - Include users
+ * @param params.include_groups - Include sub-groups
+ * @param params.include_tags - Include tags
+ * @param params.include_followers - Include followers count
+ * @returns Promise with API response
+ */
 export async function getOrganizationShow(params: OrganizationShowParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}organization_show`, {
         params: {
@@ -276,6 +390,13 @@ interface GroupPackageShowParams {
     limit?: number;
 }
 
+/**
+ * Get list of packages for a group
+ * @param params - Parameters for group package listing
+ * @param params.id - Group identifier
+ * @param params.limit - Maximum number of packages to return
+ * @returns Promise with API response
+ */
 export async function getGroupPackageShow(params: GroupPackageShowParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}group_package_show`, {
         params: {
@@ -292,6 +413,14 @@ interface TagShowParams {
     include_datasets?: boolean;
 }
 
+/**
+ * Get tag information
+ * @param params - Parameters for tag show
+ * @param params.id - Tag identifier
+ * @param params.vocabulary_id - Optional vocabulary identifier
+ * @param params.include_datasets - Include datasets with this tag
+ * @returns Promise with API response
+ */
 export async function getTagShow(params: TagShowParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}tag_show`, {
         params: {
@@ -310,6 +439,16 @@ interface UserShowParams {
     include_plugin_extras?: boolean;
 }
 
+/**
+ * Get user information
+ * @param params - Parameters for user show
+ * @param params.id - User identifier
+ * @param params.include_datasets - Include user's datasets
+ * @param params.include_num_followers - Include number of followers
+ * @param params.include_password_hash - Include password hash
+ * @param params.include_plugin_extras - Include plugin extra data
+ * @returns Promise with API response
+ */
 export async function getUserShow(params: UserShowParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}user_show`, {
         params: {
@@ -325,6 +464,13 @@ interface AutocompleteParams {
     limit?: number;
 }
 
+/**
+ * Get autocomplete suggestions for packages
+ * @param params - Autocomplete parameters
+ * @param params.q - Search query string
+ * @param params.limit - Maximum number of suggestions
+ * @returns Promise with API response containing suggestions
+ */
 export async function getPackageAutocomplete(params: AutocompleteParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}package_autocomplete`, {
         params: {
@@ -334,6 +480,13 @@ export async function getPackageAutocomplete(params: AutocompleteParams): Promis
     return response.data;
 }
 
+/**
+ * Get autocomplete suggestions for formats
+ * @param params - Autocomplete parameters
+ * @param params.q - Search query string
+ * @param params.limit - Maximum number of suggestions
+ * @returns Promise with API response containing suggestions
+ */
 export async function getFormatAutocomplete(params: AutocompleteParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}format_autocomplete`, {
         params: {
@@ -343,6 +496,13 @@ export async function getFormatAutocomplete(params: AutocompleteParams): Promise
     return response.data;
 }
 
+/**
+ * Get autocomplete suggestions for users
+ * @param params - Autocomplete parameters
+ * @param params.q - Search query string
+ * @param params.limit - Maximum number of suggestions
+ * @returns Promise with API response containing suggestions
+ */
 export async function getUserAutocomplete(params: AutocompleteParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}user_autocomplete`, {
         params: {
@@ -352,6 +512,13 @@ export async function getUserAutocomplete(params: AutocompleteParams): Promise<R
     return response.data;
 }
 
+/**
+ * Get autocomplete suggestions for groups
+ * @param params - Autocomplete parameters
+ * @param params.q - Search query string
+ * @param params.limit - Maximum number of suggestions
+ * @returns Promise with API response containing suggestions
+ */
 export async function getGroupAutocomplete(params: AutocompleteParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}group_autocomplete`, {
         params: {
@@ -361,6 +528,13 @@ export async function getGroupAutocomplete(params: AutocompleteParams): Promise<
     return response.data;
 }
 
+/**
+ * Get autocomplete suggestions for organizations
+ * @param params - Autocomplete parameters
+ * @param params.q - Search query string
+ * @param params.limit - Maximum number of suggestions
+ * @returns Promise with API response containing suggestions
+ */
 export async function getOrganizationAutocomplete(params: AutocompleteParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}organization_autocomplete`, {
         params: {
@@ -388,6 +562,25 @@ interface PackageSearchParams {
     use_default_schema?: boolean;
 }
 
+/**
+ * Search for packages with various filters
+ * @param params - Optional search parameters
+ * @param params.q - Search query string
+ * @param params.fq - Filter query string
+ * @param params.fq_list - List of filter queries
+ * @param params.sort - Sort field and direction
+ * @param params.rows - Number of results to return
+ * @param params.start - Starting index
+ * @param params.facet - Enable faceted results
+ * @param params.facet.mincount - Minimum count for facets
+ * @param params.facet.limit - Maximum number of facets
+ * @param params.facet.field - Fields to facet on
+ * @param params.include_drafts - Include draft packages
+ * @param params.include_deleted - Include deleted packages
+ * @param params.include_private - Include private packages
+ * @param params.use_default_schema - Use default schema
+ * @returns Promise with API response
+ */
 export async function getPackageSearch(params?: PackageSearchParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}package_search`, {
         params: {
@@ -439,6 +632,15 @@ interface TaskStatusParams {
     key?: string;
 }
 
+/**
+ * Get task status information
+ * @param params - Task status parameters
+ * @param params.id - Task identifier
+ * @param params.entity_id - Entity identifier
+ * @param params.task_type - Type of task
+ * @param params.key - Task key
+ * @returns Promise with API response
+ */
 export async function getTaskStatusShow(params: TaskStatusParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}task_status_show`, {
         params: {
@@ -454,6 +656,13 @@ interface TermTranslationParams {
     lang_codes?: string[];
 }
 
+/**
+ * Get term translations
+ * @param params - Translation parameters
+ * @param params.terms - Array of terms to translate
+ * @param params.lang_codes - Array of language codes
+ * @returns Promise with API response containing translations
+ */
 export async function getTermTranslationShow(params: TermTranslationParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}term_translation_show`, {
         params: {
@@ -468,6 +677,12 @@ interface GetSiteUserParams {
     defer_commit?: boolean;
 }
 
+/**
+ * Get site user information
+ * @param params - Optional parameters
+ * @param params.defer_commit - Whether to defer commit
+ * @returns Promise with API response containing site user information
+ */
 export async function getSiteUser(params?: GetSiteUserParams): Promise<Response> {
     const response = await axios.get(`${baseUrl}get_site_user`, {
         params: {
@@ -478,17 +693,30 @@ export async function getSiteUser(params?: GetSiteUserParams): Promise<Response>
 }
 
 // Status Show function
+/**
+ * Get site status information
+ * @returns Promise with API response containing site status
+ */
 export async function getStatusShow(): Promise<Response> {
     const response = await axios.get(`${baseUrl}status_show`);
     return response.data;
 }
 
 // Vocabulary functions
+/**
+ * Get list of vocabularies
+ * @returns Promise with API response containing vocabulary list
+ */
 export async function getVocabularyList(): Promise<Response> {
     const response = await axios.get(`${baseUrl}vocabulary_list`);
     return response.data;
 }
 
+/**
+ * Get vocabulary information
+ * @param id - Vocabulary identifier
+ * @returns Promise with API response
+ */
 export async function getVocabularyShow(id: string): Promise<Response> {
     const response = await axios.get(`${baseUrl}vocabulary_show`, {
         params: { id }
@@ -718,3 +946,22 @@ export async function getApiTokenList(userId: string): Promise<Response> {
     });
     return response.data;
 }
+
+
+    
+// Help functions
+interface HelpParams {
+    url: string;
+}
+
+/**
+ * Fetch data from a specific URL
+ * @param params - Request parameters
+ * @param params.url - The URL to fetch from
+ * @returns Promise with API response
+ */
+export async function getHelp(params: HelpParams): Promise<Response> {
+    const response = await axios.get(params.url);
+    return response.data;
+}
+

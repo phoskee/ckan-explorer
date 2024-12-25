@@ -11,7 +11,6 @@ export interface NavSection {
 }
 
 export const mainNav: NavItem[] = [
-  
   {
     title: "Test",
     href: "/test",
@@ -34,66 +33,58 @@ export const mainNav: NavItem[] = [
     ],
   },
   {
+    title: "Gruppi",
+    href: "/group",
+    items: [
+      {
+        title: "Esplora Gruppi",
+        href: "/group",
+        description: "Esplora i gruppi disponibili",
+      },
+    ],
+  },
+  {
+    title: "Organizzazioni",
+    href: "/organization",
+    items: [
+      {
+        title: "Esplora Organizzazioni",
+        href: "/organization",
+        description: "Sfoglia le organizzazioni",
+      },
+    ],
+  },
+  {
+    title: "Pacchetti",
+    href: "/package",
+    items: [
+      {
+        title: "Esplora Pacchetti",
+        href: "/package",
+        description: "Esplora i pacchetti disponibili",
+      },
+    ],
+  },
+  {
+        title: "Tag",
+    href: "/tag",
+    items: [
+      {
+        title: "Esplora Tag",
+        href: "/tag",
+        description: "Esplora i tag disponibili",
+      },
+    ],
+  },
+  {
     title: "Risorse",
-    href: "/risorse",
+    href: "/resource",
     items: [
       {
-        title: "Template",
-        href: "/risorse/template",
-        description: "Template pronti all'uso",
-      },
-      {
-        title: "Esempi",
-        href: "/risorse/esempi",
-        description: "Esempi di implementazione",
-      },
-      {
-        title: "Best Practices",
-        href: "/risorse/best-practices",
-        description: "Linee guida e migliori pratiche",
+        title: "Esplora Risorse",
+        href: "/resource",
+        description: "Esplora le risorse disponibili",
       },
     ],
   },
-  {
-    title: "Strumenti",
-    href: "/strumenti",
-    items: [
-      {
-        title: "CLI",
-        href: "/strumenti/cli",
-        description: "Strumenti da riga di comando",
-      },
-      {
-        title: "Playground",
-        href: "/strumenti/playground",
-        description: "Ambiente di test interattivo",
-      },
-      {
-        title: "Debug",
-        href: "/strumenti/debug",
-        description: "Strumenti per il debugging",
-      },
-    ],
-  },
-  {
-    title: "Community",
-    href: "/community",
-    items: [
-      {
-        title: "Forum",
-        href: "/community/forum",
-        description: "Discussioni e supporto della community",
-      },
-      {
-        title: "Blog",
-        href: "/community/blog",
-        description: "Articoli e aggiornamenti",
-      },
-      {
-        title: "Eventi",
-        href: "/community/eventi",
-        description: "Meetup e conferenze",
-      },
-    ],
-  },
-] 
+]; 
