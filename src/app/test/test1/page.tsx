@@ -1,28 +1,16 @@
-'use client'
+import { getCurrentPackageListWithResources } from "@/actions/api";
+import { Button } from "@/components/ui/button";
 
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface Props {
-	params: {
-		id: string;
-	};
-}
 
-export default function Page({ params }: Props) {
-	const { id } = params;
 
+export default async function Page() {
+	
+const response = await getCurrentPackageListWithResources();
 	return (
     <div className="container">
-      <Card className="h-[90svh]">
-        <CardHeader>
-          <CardTitle>Page {id}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p>Page content</p>
-          <div className="size-[5svh] bg-red-500 "></div>
-        </CardContent>
-		
-      </Card>
+      <h1>count: {response.result.length}</h1>
+      <pre>{JSON.stringify(response, null, 2)}</pre>
     </div>
   );
 }
