@@ -4,14 +4,22 @@ import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CKANResponse } from "@/types/ckan";
 import { ChartBarIcon, DatabaseIcon, TagIcon, UsersIcon } from "lucide-react";
+import { getDatasetCount, getGroupCount, getOrganizationCount, getTagList, getGroupsDetails } from "@/app/api/stats";
 
 export default async function Home() {
-  const response = await apiGet('status_show');
+  const [datasets, groups, organizations, tags, groupsDetails] = await Promise.all([
+    getDatasetCount(),
+    getGroupCount(),
+    getOrganizationCount(),
+    getTagList(),
+    getGroupsDetails()
+  ]);
+
   const stats = {
-    organizations: { name: "Organizations", count: response.result.organization_count },
-    groups: { name: "Groups", count: response.result.groups },
-    packages: { name: "Packages", count: response.result.packages },
-    tags: { name: "Tags", count: response.result.tags }
+    organizations: { name: "Organizations", count: organizations.result.length },
+    groups: { name: "Groups", count: groups.result.length },
+    packages: { name: "Packages", count: datasets.result.count },
+    tags: { name: "Tags", count: tags.result.length }
   };
   
   return (
@@ -25,31 +33,22 @@ export default async function Home() {
         </section>
 
         <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {Object.values(stats).map((stat) => {
-            const totalCount = Object.values(stats).reduce((acc, curr) => acc + curr.count, 0);
-            const percentage = (stat.count / totalCount) * 100;
-            
-            return (
-              <Card key={stat.name}>
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    {stat.name}
-                  </CardTitle>
-                  {stat.name === "Organizations" && <UsersIcon className="h-4 w-4 text-muted-foreground" />}
-                  {stat.name === "Groups" && <DatabaseIcon className="h-4 w-4 text-muted-foreground" />}
-                  {stat.name === "Packages" && <ChartBarIcon className="h-4 w-4 text-muted-foreground" />}
-                  {stat.name === "Tags" && <TagIcon className="h-4 w-4 text-muted-foreground" />}
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{stat.count}</div>
-                  <div className="flex items-center gap-2">
-                    <Progress value={percentage} className="mt-2" />
-                    <span className="text-xs text-muted-foreground">{percentage.toFixed(1)}%</span>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
+          {Object.values(stats).map((stat) => (            
+            <Card key={stat.name}>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium">
+                  {stat.name}
+                </CardTitle>
+                {stat.name === "Organizations" && <UsersIcon className="h-4 w-4 text-muted-foreground" />}
+                {stat.name === "Groups" && <DatabaseIcon className="h-4 w-4 text-muted-foreground" />}
+                {stat.name === "Packages" && <ChartBarIcon className="h-4 w-4 text-muted-foreground" />}
+                {stat.name === "Tags" && <TagIcon className="h-4 w-4 text-muted-foreground" />}
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stat.count}</div>
+              </CardContent>
+            </Card>
+          ))}
         </section>
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -143,6 +142,67 @@ export default async function Home() {
             </CardContent>
           </Card>
         </div>
+
+        <section className="grid gap-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Gruppi Tematici</CardTitle>
+              <CardDescription>
+                Panoramica dei gruppi e delle loro risorse
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ScrollArea className="h-[400px]">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {groupsDetails.result.map((group: any) => (
+                    <div 
+                      key={group.id} 
+                      className="rounded-lg border bg-card text-card-foreground shadow-sm p-4"
+                    >
+                      <div className="flex items-center gap-3 mb-3">
+                        {group.image_display_url ? (
+                          <img 
+                            src={group.image_display_url} 
+                            alt={group.title}
+                            className="h-10 w-10 rounded-lg object-cover"
+                          />
+                        ) : (
+                          <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center">
+                            <DatabaseIcon className="h-5 w-5 text-muted-foreground" />
+                          </div>
+                        )}
+                        <div>
+                          <h3 className="font-semibold truncate">{group.display_name}</h3>
+                          <p className="text-sm text-muted-foreground">
+                            {group.package_count} dataset
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {group.tags && group.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1">
+                          {group.tags.slice(0, 3).map((tag: any) => (
+                            <span 
+                              key={tag.id}
+                              className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-xs"
+                            >
+                              {tag.name}
+                            </span>
+                          ))}
+                          {group.tags.length > 3 && (
+                            <span className="text-xs text-muted-foreground">
+                              +{group.tags.length - 3}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
+            </CardContent>
+          </Card>
+        </section>
       </div>
     </div>
   );

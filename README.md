@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CKAN Explorer
 
-## Getting Started
+> [!IMPORTANT]
+> 🚧 **Progetto in Sviluppo Attivo** 🚧
+> 
+> Questo progetto è attualmente in fase di sviluppo attivo e potrebbe subire modifiche significative.
+> Alcune funzionalità potrebbero essere incomplete o soggette a cambiamenti.
+> La documentazione verrà aggiornata regolarmente per riflettere lo stato attuale del progetto.
 
-First, run the development server:
+CKAN Explorer è un'applicazione web moderna costruita con Next.js che permette di esplorare e interagire con qualsiasi istanza CKAN (Comprehensive Knowledge Archive Network). CKAN è una potente piattaforma open source per la gestione e la distribuzione di dati.
 
+## 🌟 Caratteristiche Principali
+
+### Esplorazione Dati
+- **Pacchetti**: Visualizza e cerca tra tutti i dataset disponibili
+- **Organizzazioni**: Esplora le organizzazioni che pubblicano i dati
+- **Gruppi**: Naviga tra i gruppi tematici
+- **Tag**: Cerca per parole chiave e categorie
+- **Risorse**: Accedi direttamente alle risorse dei dataset
+
+### Funzionalità Tecniche
+- Interfaccia moderna e reattiva
+- Tema chiaro/scuro
+- Layout responsive
+- Navigazione intuitiva
+- Visualizzazione dettagliata dei metadati
+- API wrapper completo per CKAN
+
+## 🚀 Iniziare
+
+### Prerequisiti
+- Node.js (versione 18 o superiore)
+- npm/yarn/pnpm
+
+### Installazione
+
+1. Clona il repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/phoskee/ckan-explorer.git
+cd ckan-explorer
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Installa le dipendenze:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Configura le variabili d'ambiente:
+Crea un file `.env.local` con:
+```bash
+NEXT_PUBLIC_CKAN_API_BASE_URL=https://tuo-ckan-instance/api/3
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Avvia il server di sviluppo:
+```bash
+npm run dev
+```
 
-## Learn More
+## 🔍 Funzionalità Dettagliate
 
-To learn more about Next.js, take a look at the following resources:
+### API Wrapper
+L'applicazione include un wrapper completo per le API CKAN che gestisce:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Package API**
+  - Ricerca dataset
+  - Visualizzazione dettagli
+  - Lista risorse
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Organization API**
+  - Lista organizzazioni
+  - Dettagli organizzazione
+  - Conteggio follower
 
-## Deploy on Vercel
+- **Group API**
+  - Lista gruppi
+  - Dettagli gruppo
+  - Dataset associati
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Tag API**
+  - Ricerca tag
+  - Lista tag
+  - Dataset per tag
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Resource API**
+  - Ricerca risorse
+  - Visualizzazione dettagli
+  - Preview dati
+
+### Visualizzazione Dati
+- Dashboard con statistiche generali
+- Visualizzazione gerarchica dei dati
+- Filtri avanzati
+- Preview dei contenuti
+- Metadati dettagliati
+
+## 🛠 Tecnologie Utilizzate
+
+- **Framework**: Next.js 15
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui
+- **Icons**: Lucide Icons
+- **HTTP Client**: Axios
+- **State Management**: React Hooks
+- **Theme**: Sistema di tema dinamico/shadcn
+
+## 📚 Struttura del Progetto
+
+```
+src/
+├── app/              # Route handlers e componenti pagina
+├── components/       # Componenti riutilizzabili
+├── lib/             # Utilities e configurazioni
+├── types/           # TypeScript type definitions
+├── hooks/           # Custom React hooks
+└── api/             # API wrapper e funzioni
+```
+
+## 🤝 Contribuire
+
+Sono aperto a contributi! Per favore:
+
+1. Fai fork del repository
+2. Crea un branch per la tua feature
+3. Committi i tuoi cambiamenti
+4. Pusha al branch
+5. Apri una Pull Request
+
+
+## 📄 Licenza
+
+Questo progetto è distribuito sotto licenza MIT.
