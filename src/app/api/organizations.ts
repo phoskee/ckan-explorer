@@ -1,6 +1,6 @@
 import { apiGet } from './base';
-import { OrganizationListParams, OrganizationShowParams } from '../types/ckan';
-import { organizationSchema } from '../schemas/organization';
+import { OrganizationListParams, OrganizationShowParams } from '@/types/ckan';
+
 
 export async function listOrganizations(params?: OrganizationListParams) {
   const response = await apiGet('/action/organization_list', { 

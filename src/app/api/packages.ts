@@ -1,6 +1,6 @@
 import { apiGet } from './base';
-import { PackageListParams, PackageSearchParams, PackageShowParams } from '../types/ckan';
-import { packageSchema } from '../schemas/package';
+import { PackageListParams, PackageSearchParams, PackageShowParams } from '@/types/ckan';
+
 
 export async function searchPackages(query: string = "", page: number = 1) {
   const params: PackageSearchParams = {
@@ -19,7 +19,8 @@ export async function searchPackages(query: string = "", page: number = 1) {
   }
 
   return {
-    packages: (response.result.results || []).map((pkg: any) => packageSchema.parse(pkg)),
+    // packages: (response.result.results || []).map((pkg: any) => packageSchema.parse(pkg)),
+    packages: response.result.results || [],
     total: response.result.count || 0,
   };
 }

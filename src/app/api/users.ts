@@ -1,5 +1,5 @@
 import { apiGet } from './base';
-import { UserListParams, UserShowParams } from '../types/ckan';
+import { UserListParams, UserShowParams } from '@/types/ckan';
 
 export async function listUsers(params?: UserListParams) {
   return apiGet('/action/user_list', params);
