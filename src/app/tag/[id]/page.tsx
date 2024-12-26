@@ -1,4 +1,3 @@
-import { getGroupShow, getPackageShow, getTagShow } from "@/actions/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -10,10 +9,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { GroupInfo, Package, Tag } from "@/types/ckan-type";
+import { CKANResponse, GroupInfo, Package, Tag } from "@/types/ckan";
 import { EyeIcon } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { apiGet } from "@/app/api/base";
 
 interface Props {
   params: {
@@ -24,7 +24,7 @@ interface Props {
 export default async function Page({ params }: Props) {
   const id = params.id;
 
-  const response = await getTagShow({ id, include_datasets: true });
+  const response: CKANResponse = await apiGet('tag_show', { id, include_datasets: true });
   console.info(response);
 
   const tag: Tag = response.result;

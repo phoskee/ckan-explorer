@@ -1,11 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import * as api from "@/actions/api";
+
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { apiGet } from "../api/base";
 
 export default async function GroupPage() {
-  const response = await api.getGroupList({
+  const response = await apiGet('package_list', {
     include_users: true,
     include_tags: true,
     include_groups: true,

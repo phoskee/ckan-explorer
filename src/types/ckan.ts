@@ -1,7 +1,115 @@
-export interface Response {
-    help: string;
-    success: boolean;
-    result: any;
+// Common response type for CKAN API
+export interface CKANResponse {
+  help: string;
+  success: boolean;
+  result: any;
+}
+
+// Base interfaces
+export interface PaginationParams {
+  limit?: number;
+  offset?: number;
+}
+
+export interface SearchParams extends PaginationParams {
+  q?: string;
+}
+
+// Package related types
+export interface PackageListParams extends PaginationParams {}
+
+export interface PackageSearchParams extends SearchParams {
+  fq?: string;
+  fq_list?: string[];
+  sort?: string;
+  rows?: number;
+  start?: number;
+  facet?: boolean;
+  "facet.mincount"?: number;
+  "facet.limit"?: number;
+  "facet.field"?: string[];
+  include_drafts?: boolean;
+  include_deleted?: boolean;
+  include_private?: boolean;
+  use_default_schema?: boolean;
+}
+
+export interface PackageShowParams {
+  id: string;
+  use_default_schema?: boolean;
+  include_plugin_data?: boolean;
+}
+
+// Organization related types
+export interface OrganizationListParams extends SearchParams {
+  organizations?: string[];
+  order_by?: string;
+  sort?: string;
+  all_fields?: boolean;
+  include_dataset_count?: boolean;
+  include_extras?: boolean;
+  include_tags?: boolean;
+  include_groups?: boolean;
+  include_users?: boolean;
+}
+
+export interface OrganizationShowParams {
+  id: string;
+  include_datasets?: boolean;
+  include_dataset_count?: boolean;
+  include_extras?: boolean;
+  include_users?: boolean;
+  include_groups?: boolean;
+  include_tags?: boolean;
+  include_followers?: boolean;
+}
+
+// Group related types
+export interface GroupListParams extends SearchParams {
+  type?: string;
+  order_by?: string;
+  sort?: string;
+  groups?: string[];
+  all_fields?: boolean;
+  include_dataset_count?: boolean;
+  include_extras?: boolean;
+  include_tags?: boolean;
+  include_groups?: boolean;
+  include_users?: boolean;
+}
+
+export interface GroupShowParams extends OrganizationShowParams {}
+
+// Resource related types
+export interface ResourceSearchParams extends SearchParams {
+  order_by?: string;
+}
+
+// Tag related types
+export interface TagSearchParams extends SearchParams {
+  vocabulary_id?: string;
+}
+
+export interface TagShowParams {
+  id: string;
+  vocabulary_id?: string;
+  include_datasets?: boolean;
+}
+
+// User related types
+export interface UserListParams extends SearchParams {
+  email?: string;
+  order_by?: string;
+  all_fields?: boolean;
+  include_site_user?: boolean;
+}
+
+export interface UserShowParams {
+  id: string;
+  include_datasets?: boolean;
+  include_num_followers?: boolean;
+  include_password_hash?: boolean;
+  include_plugin_extras?: boolean;
 }
 
 export interface Package {
@@ -89,7 +197,6 @@ export interface GroupInfo {
   tags: any[];
   groups: any[];
 }
-
 
 export interface PackageInfo {
   access_rights: string;
@@ -194,6 +301,3 @@ export interface Group {
   name: string;
   title: string;
 }
-
-
-

@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import * as api from "@/actions/api";
+import { apiGet } from "@/app/api/base";
 
 export default async function TagPage() {
-  const response = await api.getTagList();
+  const response = await apiGet('tag_list');
 
   return (
     <div className="container">

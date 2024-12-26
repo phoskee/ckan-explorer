@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import * as api from "@/actions/api";
+import { apiGet } from "@/app/api/base";
 
 export default async function OrganizationPage() {
-  const response = await api.getOrganizationList();
+  const response = await apiGet('organization_list');
 
   return (
     <div className="container">

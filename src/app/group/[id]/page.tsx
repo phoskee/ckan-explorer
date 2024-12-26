@@ -1,9 +1,11 @@
-import { getGroupShow } from "@/actions/api";
+
+import { apiGet } from "@/app/api/base";
+import { getGroupShow } from "@/app/api/groups";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { GroupInfo, Package } from "@/types/ckan-type";
+import { GroupInfo, Package } from "@/types/ckan";
 import { EyeIcon } from "lucide-react";
 import Link from "next/link";
 
