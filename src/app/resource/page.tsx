@@ -1,8 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { apiGet } from "../api/base";
 
 
 export default async function ResourcePage() {
-  const response = await api.getResourceSearch({ query: "*:*" });
+  const response = await apiGet('resource_search', { query: "*:*" });
 
   return (
     <div className="container">
