@@ -61,11 +61,12 @@ export interface Resource {
 }
 
 export interface Tag {
-  display_name: string;
   id: string;
   name: string;
-  state: string;
-  vocabulary_id: any;
+  display_name: string;
+  state?: string;
+  packages?: Package[];
+  vocabulary_id?: string | null;
 }
 
 export interface GroupInfo {
@@ -137,33 +138,6 @@ export interface PackageInfo {
   dataset_is_local: boolean;
 }
 
-export interface Organization {
-  id: string;
-  name: string;
-  title: string;
-  type: string;
-  description: string;
-  image_url: string;
-  created: string;
-  is_organization: boolean;
-  approval_status: string;
-  state: string;
-}
-
-export interface Extra {
-  key: string;
-  value: string;
-}
-
-export interface Group {
-  description: string;
-  display_name: string;
-  id: string;
-  image_display_url: string;
-  name: string;
-  title: string;
-}
-
 export interface ResourcePackage {
   access_url: string;
   cache_last_updated: any;
@@ -194,10 +168,32 @@ export interface ResourcePackage {
   url_type: any;
 }
 
-export interface Tag {
-  display_name: string;
+export interface Organization {
   id: string;
   name: string;
+  title: string;
+  type: string;
+  description: string;
+  image_url: string;
+  created: string;
+  is_organization: boolean;
+  approval_status: string;
   state: string;
-  vocabulary_id: any;
 }
+
+export interface Extra {
+  key: string;
+  value: string;
+}
+
+export interface Group {
+  description: string;
+  display_name: string;
+  id: string;
+  image_display_url: string;
+  name: string;
+  title: string;
+}
+
+
+

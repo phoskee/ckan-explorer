@@ -1,4 +1,4 @@
-import { GroupInfo } from "@/types/ckan-type";
+
 import axios from "axios";
 const baseUrl = process.env.NEXT_PUBLIC_CKAN_API_BASE_URL;
 
@@ -965,3 +965,29 @@ export async function getHelp(params: HelpParams): Promise<Response> {
     return response.data;
 }
 
+interface CountResult {
+    organizations: {count: number, name: string};
+    groups: {count: number, name: string};
+    packages: {count: number, name: string};
+    tags: {count: number, name: string};
+}
+
+export async function getCount(): Promise<CountResult> {
+    const result = {
+        organizations: {count: 0, name: 'Organizations'},
+        groups: {count: 0, name: 'Groups'},
+        packages: {count: 0, name: 'Packages'},
+        tags: {count: 0, name: 'Tags'},
+    };
+    
+    const response = await axios.get(`${baseUrl}package_list`);
+    result.packages.count = response.data.result.length;
+    const response2 = await axios.get(`${baseUrl}organization_list`);
+    result.organizations.count = response2.data.result.length;
+    const response3 = await axios.get(`${baseUrl}group_list`);
+    result.groups.count = response3.data.result.length;
+    const response4 = await axios.get(`${baseUrl}tag_list`);
+    result.tags.count = response4.data.result.length;
+
+    return result;
+}
