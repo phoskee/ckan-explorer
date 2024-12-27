@@ -4,15 +4,10 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { apiGet } from "../api/base";
+import { getPackageList } from "../api/packages";
 
 export default async function GroupPage() {
-  const response = await apiGet('package_list', {
-    include_users: true,
-    include_tags: true,
-    include_groups: true,
-    include_extras: true,
-    include_dataset_count: true,
-  });
+  const response = await getPackageList();
 
   return (
     <div className="container flex flex-col gap-2">

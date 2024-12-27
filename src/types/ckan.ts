@@ -16,7 +16,8 @@ export interface SearchParams extends PaginationParams {
 }
 
 // Package related types
-export interface PackageListParams extends PaginationParams {}
+export interface PackageListParams extends PaginationParams {
+}
 
 export interface PackageSearchParams extends SearchParams {
   fq?: string;
