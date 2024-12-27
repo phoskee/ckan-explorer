@@ -2,8 +2,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { apiGet } from "../api/base";
-import { CKANResponse } from "@/types/ckan";
 import { listGroups } from "../api/groups";
 
 export default async function GroupPage() {

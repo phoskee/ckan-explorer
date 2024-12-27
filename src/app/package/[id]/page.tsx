@@ -1,10 +1,8 @@
-import { getGroupShow } from "@/app/api/groups";
 import { getPackageShow } from "@/app/api/packages";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { GroupInfo, Package, Resource } from "@/types/ckan";
+import { Package, Resource, Tag } from "@/types/ckan";
 import { EyeIcon } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -22,7 +20,7 @@ export default async function Page({ params }: Props) {
   const response = await getPackageShow({ id }); // TODO: aggiungere commenti
   console.info(response);
   
-  const dataset: Package = response.result;  // il tuo oggetto dataset
+  const dataset: Package = response.result; 
 
   return (
     <Card className="container h-[90svh]">
@@ -120,7 +118,7 @@ export default async function Page({ params }: Props) {
           <div className="w-fit">
             <h2 className="text-xl font-semibold mb-2">Tag</h2>
             <div className="flex flex-wrap gap-2">
-              {dataset.tags.map((tag: any, index: number) => (
+              {dataset.tags.map((tag: Tag, index: number) => (
                 <Link key={index} href={`/tag/${tag.id}`}>
                   <Badge variant="secondary">{tag.name}</Badge>
                 </Link>

@@ -4,14 +4,14 @@ const nextConfig: NextConfig = {
   /* config options here */
   typescript: {
     // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
+    // Ignora gli errori TypeScript durante la build
     ignoreBuildErrors: true,
   },
   eslint: {
+    // Ignora anche gli errori ESLint se necessario
     ignoreDuringBuilds: true,
   },
+  output: 'export', // Necessario per GitHub Pages
 };
 
 export default nextConfig;

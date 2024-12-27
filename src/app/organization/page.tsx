@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { apiGet } from "@/app/api/base";
 import { listOrganizations } from "../api/organizations";
 
 export default async function OrganizationPage() {

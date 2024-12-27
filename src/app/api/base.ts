@@ -4,9 +4,9 @@ import axios from 'axios';
 
 const baseUrl = process.env.NEXT_PUBLIC_CKAN_API_BASE_URL || 'https://dati.gov.it/opendata/api/3';
 
-export async function apiGet<T = any>(
+export async function apiGet<T extends Record<string, unknown>>(
   endpoint: string,
-  params?: Record<string, any>
+  params?: Record<string, string | number | boolean>
 ): Promise<CKANResponse & { result: T }> {
   try {
     console.debug(`${baseUrl}${endpoint}`, params);

@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
@@ -9,10 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CKANResponse, GroupInfo, Package, Tag } from "@/types/ckan";
+import { CKANResponse, Package, Tag } from "@/types/ckan";
 import { EyeIcon } from "lucide-react";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import { apiGet } from "@/app/api/base";
 
 interface Props {

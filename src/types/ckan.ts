@@ -17,6 +17,7 @@ export interface SearchParams extends PaginationParams {
 
 // Package related types
 export interface PackageListParams extends PaginationParams {
+  parametroinsesistente?: string;
 }
 
 export interface PackageSearchParams extends SearchParams {

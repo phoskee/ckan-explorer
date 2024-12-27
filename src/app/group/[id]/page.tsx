@@ -1,14 +1,16 @@
-
-import { apiGet } from "@/app/api/base";
 import { getGroupShow } from "@/app/api/groups";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@/components/ui/table";
 import { GroupInfo, Package } from "@/types/ckan";
 import { EyeIcon } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-
 
 interface Props {
   params: {
@@ -79,10 +81,12 @@ export default async function Page({ params }: Props) {
           <div>
             {group.image_display_url && (
               <div className="mb-4">
-                <img
+                <Image
                   src={group.image_display_url}
                   alt={`${group.display_name} logo`}
                   className="max-w-xs rounded-lg shadow-md"
+                  width={100}
+                  height={100}
                 />
               </div>
             )}

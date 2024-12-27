@@ -1,10 +1,9 @@
-import { apiGet } from "@/app/api/base";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { CKANResponse } from "@/types/ckan";
 import { ChartBarIcon, DatabaseIcon, TagIcon, UsersIcon } from "lucide-react";
 import { getDatasetCount, getGroupCount, getOrganizationCount, getTagList, getGroupsDetails } from "@/app/api/stats";
+import Image from "next/image";
+import { GroupInfo, Tag } from "@/types/ckan";
 
 export default async function Home() {
   const [datasets, groups, organizations, tags, groupsDetails] = await Promise.all([
@@ -154,14 +153,14 @@ export default async function Home() {
             <CardContent>
               <ScrollArea className="h-[400px]">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {groupsDetails.result.map((group: any) => (
+                  {groupsDetails.result.map((group: GroupInfo) => (
                     <div 
                       key={group.id} 
                       className="rounded-lg border bg-card text-card-foreground shadow-sm p-4"
                     >
                       <div className="flex items-center gap-3 mb-3">
                         {group.image_display_url ? (
-                          <img 
+                          <Image 
                             src={group.image_display_url} 
                             alt={group.title}
                             className="h-10 w-10 rounded-lg object-cover"
@@ -181,7 +180,7 @@ export default async function Home() {
                       
                       {group.tags && group.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1">
-                          {group.tags.slice(0, 3).map((tag: any) => (
+                          {group.tags.slice(0, 3).map((tag: Tag) => (
                             <span 
                               key={tag.id}
                               className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-xs"
